@@ -4,14 +4,18 @@ import "errors"
 
 func (m *Matrix[N]) At(i int, j int) (N, error) {
 	if i < 0 || j < 0 {
-		return nil, errors.New("index out of boundaries")
+		return nil, boundariesError
 	}
 
 	if i > m.RowsNumber-1 || j > m.ColumnsNumber-1 {
-		return nil, errors.New("index out of boundaries")
+		return nil, boundariesError
 	}
 
 	return m.Matr[i][j], nil
+}
+
+func (m *Matrix[N]) IsSquare() bool {
+	return IsSquare[N](m)
 }
 
 func (m *Matrix[N]) Copy(other *Matrix[N]) {
@@ -28,7 +32,7 @@ func (m *Matrix[N]) GetColumnsNumber() int {
 
 func (m *Matrix[N]) InsertRow(index int, row []N) error {
 	if len(row) != m.ColumnsNumber {
-		return errors.New("wrong number of elements in row")
+		return errors.New("wrong number of elements in a row")
 	}
 	m.Matr = append(m.Matr[:index+1], m.Matr[index:]...)
 	m.Matr[index] = row
@@ -37,7 +41,7 @@ func (m *Matrix[N]) InsertRow(index int, row []N) error {
 
 func (m *Matrix[N]) InsertColumn(index int, column []N) error {
 	if len(column) != m.RowsNumber {
-		return errors.New("wrong number of elements in column")
+		return errors.New("wrong number of elements in a column")
 	}
 	for i := 0; i < m.RowsNumber; i++ {
 		m.Matr[i] = append(m.Matr[i][:index+1], m.Matr[i][index:]...)
@@ -62,4 +66,8 @@ func (m *Matrix[N]) T() (ans *Matrix[N], err error) {
 		}
 	}
 	return ans, nil
+}
+
+func (m *Matrix[N]) Det() (num N, err error) {
+	return Det[N](m)
 }

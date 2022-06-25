@@ -19,6 +19,10 @@ func NewEmptyMatrix[N Number](rowsNumber int, columnsNumber int) (m *Matrix[N]) 
 	return m
 }
 
+func IsSquare[N Number](m *Matrix[N]) bool {
+	return m.RowsNumber == m.ColumnsNumber
+}
+
 func NewIdentityMatrix[N Number](rowsNumber int) (m *Matrix[N]) {
 	m.RowsNumber = rowsNumber
 	m.ColumnsNumber = rowsNumber
@@ -65,8 +69,8 @@ func Multiply[N Number](m1 *Matrix[N], m2 *Matrix[N]) (ans *Matrix[N], err error
 }
 
 func Power[N Number](m *Matrix[N], pow int) (ans *Matrix[N], err error) {
-	if m.RowsNumber != m.ColumnsNumber {
-		return nil, errors.New("matrix has to be square")
+	if !m.IsSquare() {
+		return nil, squareMatrixError
 	}
 
 	ans = NewIdentityMatrix[N](m.RowsNumber)
@@ -95,4 +99,11 @@ func ToBinary[I Int](m *Matrix[I]) (ans *Matrix[I], err error) {
 		}
 	}
 	return ans, err
+}
+
+func Det[N Number](m *Matrix[N]) (num N, err error) {
+	if !m.IsSquare() {
+		return nil, squareMatrixError
+	}
+	return nil, nil
 }
