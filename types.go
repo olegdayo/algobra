@@ -15,3 +15,9 @@ type Float interface {
 type Number interface {
 	Int | UInt | Float
 }
+
+type Matrix[N Number] struct {
+	RowsNumber    int
+	ColumnsNumber int
+	Matr          [][]N
+}
