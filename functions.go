@@ -48,6 +48,78 @@ func Copy[N Number](from *Matrix[N], to *Matrix[N]) {
 	to = MakeCopy[N](from)
 }
 
+func Negative[N Number](n interface{}) (interface{}, error) {
+	switch obj := n.(type) {
+	case N:
+		var ans N
+		ans = obj * -1
+		return ans, nil
+
+	case Matrix[N]:
+		var ans Matrix[N]
+		ans.Copy(&obj)
+		for i := 0; i < ans.RowsNumber; i++ {
+			for j := 0; j < ans.ColumnsNumber; j++ {
+				ans.Matr[i][j] *= -1
+			}
+		}
+		return ans, nil
+
+	case *Matrix[N]:
+		var ans Matrix[N]
+		ans.Copy(obj)
+		for i := 0; i < ans.RowsNumber; i++ {
+			for j := 0; j < ans.ColumnsNumber; j++ {
+				ans.Matr[i][j] *= -1
+			}
+		}
+		return ans, nil
+
+	default:
+		return nil, invalidTypeError
+	}
+}
+
+func Add[N Number](m *Matrix[N], n interface{}) (ans *Matrix[N], err error) {
+	switch obj := n.(type) {
+	case N:
+		ans.Copy(m)
+		for i := 0; i < m.RowsNumber; i++ {
+			for j := 0; j < m.ColumnsNumber; j++ {
+				ans.Matr[i][j] += obj
+			}
+		}
+
+	case Matrix[N]:
+		ans.Copy(m)
+		for i := 0; i < m.RowsNumber; i++ {
+			for j := 0; j < m.ColumnsNumber; j++ {
+				ans.Matr[i][j] += obj.Matr[i][j]
+			}
+		}
+
+	case *Matrix[N]:
+		ans.Copy(m)
+		for i := 0; i < m.RowsNumber; i++ {
+			for j := 0; j < m.ColumnsNumber; j++ {
+				ans.Matr[i][j] += obj.Matr[i][j]
+			}
+		}
+
+	default:
+		return nil, invalidTypeError
+	}
+	return ans, nil
+}
+
+func Substract[N Number](m *Matrix[N], n interface{}) (*Matrix[N], error) {
+	neg, err := Negative[N](n)
+	if err != nil {
+		return nil, err
+	}
+	return Add(m, neg)
+}
+
 func Multiply[N Number](m1 *Matrix[N], m2 *Matrix[N]) (ans *Matrix[N], err error) {
 	if m1.ColumnsNumber != m2.RowsNumber {
 		return nil, errors.New("number of columns of first matrix" +
