@@ -14,14 +14,6 @@ func (m *Matrix[N]) At(i int, j int) (N, error) {
 	return m.Matr[i][j], nil
 }
 
-func (m *Matrix[N]) IsSquare() bool {
-	return IsSquare[N](m)
-}
-
-func (m *Matrix[N]) Copy(other *Matrix[N]) {
-	Copy[N](m, other)
-}
-
 func (m *Matrix[N]) GetRowsNumber() int {
 	return m.RowsNumber
 }
@@ -50,24 +42,16 @@ func (m *Matrix[N]) InsertColumn(index int, column []N) error {
 	return nil
 }
 
-func (m *Matrix[N]) MultiplyTo(m2 *Matrix[N]) (*Matrix[N], error) {
-	return Multiply(m, m2)
+func (m *Matrix[N]) IsSquare() bool {
+	return m.RowsNumber == m.ColumnsNumber
 }
 
-func (m *Matrix[N]) ToPower(n int) (ans *Matrix[N], err error) {
-	return Power(m, n)
-}
-
-func (m *Matrix[N]) T() (ans *Matrix[N], err error) {
-	ans = NewEmptyMatrix[N](m.ColumnsNumber, m.RowsNumber)
+func ToBinary[I Int](m *Matrix[I]) (ans *Matrix[I], err error) {
+	ans.Copy(m)
 	for i := 0; i < ans.RowsNumber; i++ {
 		for j := 0; j < ans.ColumnsNumber; j++ {
-			ans.Matr[i][j] = m.Matr[j][i]
+			ans.Matr[i][j] = m.Matr[i][j] % 2
 		}
 	}
-	return ans, nil
-}
-
-func (m *Matrix[N]) Det() (num N, err error) {
-	return Det[N](m)
+	return ans, err
 }
