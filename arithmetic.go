@@ -90,6 +90,16 @@ func (m *Matrix[N]) Multiply(n interface{}) (ans *Matrix[N], err error) {
 	}
 }
 
+func (m *Matrix[N]) Divide(n N) (ans *Matrix[N]) {
+	ans.Copy(m)
+	for i := 0; i < ans.RowsNumber; i++ {
+		for j := 0; j < ans.ColumnsNumber; j++ {
+			ans.Matr[i][j] /= n
+		}
+	}
+	return ans
+}
+
 func (m *Matrix[N]) Power(pow int) (ans *Matrix[N], err error) {
 	if !m.IsSquare() {
 		return nil, squareMatrixError

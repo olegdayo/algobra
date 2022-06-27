@@ -3,7 +3,8 @@ package algobra
 import "errors"
 
 var (
-	boundariesError   = errors.New("index out of boundaries")
-	squareMatrixError = errors.New("matrix has to be square")
-	invalidTypeError  = errors.New("invalid type")
+	boundariesError     = errors.New("index out of boundaries")
+	squareMatrixError   = errors.New("matrix has to be square")
+	invalidTypeError    = errors.New("invalid type")
+	singularMatrixError = errors.New("matrix must not be singular")
 )
