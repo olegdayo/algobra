@@ -12,9 +12,9 @@ func (m *Matrix[N]) T() (t *Matrix[N], err error) {
 
 func (m *Matrix[N]) Det() (det N, err error) {
 	if !m.IsSquare() {
-		return nil, squareMatrixError
+		return 0, squareMatrixError
 	}
-	return nil, nil
+	return 0, nil
 }
 
 func (m *Matrix[N]) Adjugate() (adj *Matrix[N]) {

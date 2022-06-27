@@ -16,8 +16,10 @@ type Number interface {
 	Int | UInt | Float
 }
 
+type Elems[N Number] [][]N
+
 type Matrix[N Number] struct {
 	RowsNumber    int
 	ColumnsNumber int
-	Matr          [][]N
+	Matr          Elems[N]
 }

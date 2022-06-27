@@ -4,11 +4,11 @@ import "errors"
 
 func (m *Matrix[N]) At(i int, j int) (N, error) {
 	if i < 0 || j < 0 {
-		return nil, boundariesError
+		return 0, boundariesError
 	}
 
 	if i > m.RowsNumber-1 || j > m.ColumnsNumber-1 {
-		return nil, boundariesError
+		return 0, boundariesError
 	}
 
 	return m.Matr[i][j], nil

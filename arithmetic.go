@@ -6,7 +6,7 @@ func Negative[N Number](n interface{}) (interface{}, error) {
 	switch obj := n.(type) {
 	case N:
 		var ans N
-		ans = obj * -1
+		ans = -obj
 		return ans, nil
 
 	case *Matrix[N]:
@@ -14,7 +14,7 @@ func Negative[N Number](n interface{}) (interface{}, error) {
 		ans.Copy(obj)
 		for i := 0; i < ans.RowsNumber; i++ {
 			for j := 0; j < ans.ColumnsNumber; j++ {
-				ans.Matr[i][j] *= -1
+				ans.Matr[i][j] = -ans.Matr[i][j]
 			}
 		}
 		return ans, nil
