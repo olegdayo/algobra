@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"algobra"
+	"github.com/OFFLUCK/algobra"
 	"testing"
 )
 
