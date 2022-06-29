@@ -35,6 +35,7 @@ func TestAt(t *testing.T) {
 			}
 		}
 	}
+
 	for i := matrix.RowsNumber; i < matrix.RowsNumber+deviation; i++ {
 		for j := matrix.ColumnsNumber; j < matrix.ColumnsNumber+deviation; j++ {
 			_, err := matrix.At(i, j)
