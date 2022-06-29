@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"fmt"
 	"github.com/OFFLUCK/algobra"
 	"testing"
 )
@@ -40,6 +41,23 @@ func TestAt(t *testing.T) {
 		for j := matrix.ColumnsNumber; j < matrix.ColumnsNumber+deviation; j++ {
 			_, err := matrix.At(i, j)
 			if err == nil {
+				t.Fail()
+			}
+		}
+	}
+}
+
+func TestGet(t *testing.T) {
+	var m *algobra.Matrix[int]
+	for i := 1; i < 10; i++ {
+		for j := 1; j < 10; j++ {
+			m = algobra.NewEmptyMatrix[int](i, j)
+			if i != m.GetRowsNumber() {
+				fmt.Printf("%d, %d\n", i, m.GetRowsNumber())
+				t.Fail()
+			}
+			if j != m.GetColumnsNumber() {
+				fmt.Printf("%d, %d\n", j, m.GetColumnsNumber())
 				t.Fail()
 			}
 		}

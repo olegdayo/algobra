@@ -116,7 +116,10 @@ func (m *Matrix[N]) Power(pow int) (ans *Matrix[N], err error) {
 			}
 		} else {
 			pow--
-			ans, _ = ans.Multiply(m)
+			ans, err = ans.Multiply(m)
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 

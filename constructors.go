@@ -14,6 +14,12 @@ func NewMatrix[N Number](elems Elems[N]) (m *Matrix[N]) {
 
 func NewEmptyMatrix[N Number](rowsNumber int, columnsNumber int) (m *Matrix[N]) {
 	m = new(Matrix[N])
+
+	if rowsNumber <= 0 || columnsNumber <= 0 {
+		rowsNumber = 0
+		columnsNumber = 0
+	}
+
 	m.RowsNumber = rowsNumber
 	m.ColumnsNumber = columnsNumber
 	m.Matr = make([][]N, m.RowsNumber)
@@ -23,10 +29,15 @@ func NewEmptyMatrix[N Number](rowsNumber int, columnsNumber int) (m *Matrix[N]) 
 	return m
 }
 
-func NewIdentityMatrix[N Number](rowsNumber int) (m *Matrix[N]) {
+func NewIdentityMatrix[N Number](size int) (m *Matrix[N]) {
 	m = new(Matrix[N])
-	m.RowsNumber = rowsNumber
-	m.ColumnsNumber = rowsNumber
+
+	if size <= 0 {
+		size = 0
+	}
+
+	m.RowsNumber = size
+	m.ColumnsNumber = size
 	m.Matr = make([][]N, m.RowsNumber)
 	for i := 0; i < m.RowsNumber; i++ {
 		m.Matr[i] = make([]N, m.ColumnsNumber)
