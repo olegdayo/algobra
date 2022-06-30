@@ -16,6 +16,7 @@ type Number interface {
 	Int | UInt | Float
 }
 
+// Elems is a type for convenient way of passing matrix into function.
 type Elems[N Number] [][]N
 
 type Matrix[N Number] struct {
