@@ -27,6 +27,10 @@ func (m *Matrix[N]) InsertRow(index int, row []N) error {
 		return errors.New("wrong number of elements in a row")
 	}
 
+	if index < 0 || index > m.RowsNumber-1 {
+		return boundariesError
+	}
+
 	m.Matr = append(m.Matr[:index+1], m.Matr[index:]...)
 	m.Matr[index] = row
 
@@ -37,6 +41,10 @@ func (m *Matrix[N]) InsertRow(index int, row []N) error {
 func (m *Matrix[N]) InsertColumn(index int, column []N) error {
 	if len(column) != m.RowsNumber {
 		return errors.New("wrong number of elements in a column")
+	}
+
+	if index < 0 || index > m.ColumnsNumber-1 {
+		return boundariesError
 	}
 
 	for i := 0; i < m.RowsNumber; i++ {
