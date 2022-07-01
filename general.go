@@ -26,8 +26,11 @@ func (m *Matrix[N]) InsertRow(index int, row []N) error {
 	if len(row) != m.ColumnsNumber {
 		return errors.New("wrong number of elements in a row")
 	}
+
 	m.Matr = append(m.Matr[:index+1], m.Matr[index:]...)
 	m.Matr[index] = row
+
+	m.RowsNumber++
 	return nil
 }
 
@@ -35,10 +38,13 @@ func (m *Matrix[N]) InsertColumn(index int, column []N) error {
 	if len(column) != m.RowsNumber {
 		return errors.New("wrong number of elements in a column")
 	}
+
 	for i := 0; i < m.RowsNumber; i++ {
 		m.Matr[i] = append(m.Matr[i][:index+1], m.Matr[i][index:]...)
 		m.Matr[i][index] = column[i]
 	}
+
+	m.ColumnsNumber++
 	return nil
 }
 
