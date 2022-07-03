@@ -1,5 +1,9 @@
 package algobra
 
+// NewMatrix creates a new matrix from 2D slice.
+//     {{1, 2, 3},   |1 2 3|
+//     {4, 5, 6}, -> |4 5 6|
+//     {7, 8, 9}}    |7 8 9|
 func NewMatrix[N Number](elems Elems[N]) (m *Matrix[N]) {
 	m = new(Matrix[N])
 	m.RowsNumber = len(elems)
@@ -12,6 +16,10 @@ func NewMatrix[N Number](elems Elems[N]) (m *Matrix[N]) {
 	return m
 }
 
+// NewEmptyMatrix creates new empty matrix of MxN elements.
+//           |0 0 0 0 0|
+// (3, 5) -> |0 0 0 0 0|
+//           |0 0 0 0 0|
 func NewEmptyMatrix[N Number](rowsNumber int, columnsNumber int) (m *Matrix[N]) {
 	m = new(Matrix[N])
 
@@ -29,6 +37,11 @@ func NewEmptyMatrix[N Number](rowsNumber int, columnsNumber int) (m *Matrix[N]) 
 	return m
 }
 
+// NewIdentityMatrix creates a new identity matrix.
+// Square only.
+//      |1 0 0|
+// 3 -> |0 1 0|
+//      |0 0 1|
 func NewIdentityMatrix[N Number](size int) (m *Matrix[N]) {
 	m = new(Matrix[N])
 
@@ -46,6 +59,7 @@ func NewIdentityMatrix[N Number](size int) (m *Matrix[N]) {
 	return m
 }
 
+// Equals function checks if m1 equals m2: sizes and elements.
 func (m1 *Matrix[N]) Equals(m2 *Matrix[N]) bool {
 	if m1.RowsNumber != m2.RowsNumber {
 		return false

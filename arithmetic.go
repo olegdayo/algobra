@@ -2,6 +2,11 @@ package algobra
 
 import "errors"
 
+// Negative function gets state of an object.
+// Examples:
+// 1 -> -1
+// -0.5 -> 0.5
+// A -> -1 * A
 func Negative[N Number](n interface{}) (interface{}, error) {
 	switch obj := n.(type) {
 	case N:
@@ -24,6 +29,7 @@ func Negative[N Number](n interface{}) (interface{}, error) {
 	}
 }
 
+// Add function adds an object (a number or matrix) to a new instance of given matrix.
 func (m *Matrix[N]) Add(n interface{}) (ans *Matrix[N], err error) {
 	switch obj := n.(type) {
 	case N:
@@ -48,7 +54,8 @@ func (m *Matrix[N]) Add(n interface{}) (ans *Matrix[N], err error) {
 	return ans, nil
 }
 
-func (m *Matrix[N]) Substract(n interface{}) (*Matrix[N], error) {
+// Subtract function subtracts an object (a number or matrix) from a new instance of given matrix.
+func (m *Matrix[N]) Subtract(n interface{}) (*Matrix[N], error) {
 	neg, err := Negative[N](n)
 	if err != nil {
 		return nil, err
@@ -56,6 +63,7 @@ func (m *Matrix[N]) Substract(n interface{}) (*Matrix[N], error) {
 	return m.Add(neg)
 }
 
+// Multiply function multiplies a new instance of given matrix to an object (a number or matrix).
 func (m *Matrix[N]) Multiply(n interface{}) (ans *Matrix[N], err error) {
 	switch obj := n.(type) {
 	case N:
@@ -90,6 +98,7 @@ func (m *Matrix[N]) Multiply(n interface{}) (ans *Matrix[N], err error) {
 	}
 }
 
+// Divide function divides a new instance of given matrix on a number.
 func (m *Matrix[N]) Divide(n N) (ans *Matrix[N]) {
 	ans.Copy(m)
 	for i := 0; i < ans.RowsNumber; i++ {
@@ -100,9 +109,20 @@ func (m *Matrix[N]) Divide(n N) (ans *Matrix[N]) {
 	return ans
 }
 
+// Power of matrix.
+// An efficient (logN).
+// A ^ -x == (A ^ -1) ^ x.
 func (m *Matrix[N]) Power(pow int) (ans *Matrix[N], err error) {
 	if !m.IsSquare() {
 		return nil, squareMatrixError
+	}
+
+	if pow < 0 {
+		inv, err := m.Inverse()
+		if err != nil {
+			return nil, err
+		}
+		return inv.Power(-pow)
 	}
 
 	ans = NewIdentityMatrix[N](m.RowsNumber)

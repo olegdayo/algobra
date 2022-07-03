@@ -2,6 +2,8 @@ package algobra
 
 import "errors"
 
+// At function:
+// m.Matr[i][j] is almost the same to m.At(i, j).
 func (m *Matrix[N]) At(i int, j int) (N, error) {
 	if i < 0 || j < 0 {
 		return 0, boundariesError
@@ -22,6 +24,7 @@ func (m *Matrix[N]) GetColumnsNumber() int {
 	return m.ColumnsNumber
 }
 
+// InsertRow inserts a row.
 func (m *Matrix[N]) InsertRow(index int, row []N) error {
 	if len(row) != m.ColumnsNumber {
 		return errors.New("wrong number of elements in a row")
@@ -38,6 +41,7 @@ func (m *Matrix[N]) InsertRow(index int, row []N) error {
 	return nil
 }
 
+// InsertColumn inserts a column.
 func (m *Matrix[N]) InsertColumn(index int, column []N) error {
 	if len(column) != m.RowsNumber {
 		return errors.New("wrong number of elements in a column")
@@ -56,10 +60,15 @@ func (m *Matrix[N]) InsertColumn(index int, column []N) error {
 	return nil
 }
 
+// IsSquare checks if matrix is square.
 func (m *Matrix[N]) IsSquare() bool {
 	return m.RowsNumber == m.ColumnsNumber
 }
 
+// ToBinary function:
+// |1 2 3|    |1 0 1|
+// |4 5 6| -> |0 1 0|
+// |7 8 9|    |1 0 1|
 func ToBinary[I Int](m *Matrix[I]) (ans *Matrix[I], err error) {
 	ans.Copy(m)
 	for i := 0; i < ans.RowsNumber; i++ {
