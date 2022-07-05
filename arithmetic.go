@@ -1,6 +1,8 @@
 package algobra
 
-import "errors"
+import (
+	"errors"
+)
 
 // Negative function gets state of an object.
 // Examples:

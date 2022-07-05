@@ -1,6 +1,8 @@
 package algobra
 
-import "errors"
+import (
+	"errors"
+)
 
 // At function:
 // m.Matr[i][j] is almost the same to m.At(i, j).
